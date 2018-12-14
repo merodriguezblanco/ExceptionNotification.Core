@@ -34,25 +34,34 @@ namespace ExceptionNotificationCore.Email
 
         private static string ComposeContent(Exception exception, HttpRequest request)
         {
-            var content = $"{exception.Message}";
+            var content = "";
+
+            content += "------------------\n" +
+                       "Exception Message:\n" +
+                       "------------------\n\n" +
+                       exception.Message;
 
             if (request != null)
             {
-                // Request
-                content += "--------------\n" +
+                content += "--------\n" +
                            "Request:\n" +
-                           "--------------\n\n" +
-                           $"URL: {request.Path}\n" +
-                           $"HTTP Method: {request.Method}\n" +
-                           $"Timestamp: {DateTime.Now:F}\n";
+                           "--------\n\n" +
+                           RequestContext(request);
             }
 
-            // Stacktrace
-            content += "\n\n--------------\n" +
+            content += "-----------\n" +
                        "Stacktrace:\n" +
-                       "--------------\n\n" +
-                       $"{exception.StackTrace}";
-            
+                       "-----------\n\n" +
+                       exception.StackTrace;
+
+            return content;
+        }
+
+        private static string RequestContext(HttpRequest request)
+        {
+            var content = $"URL: {request.Path}\n" +
+                          $"HTTP Method: {request.Method}\n" +
+                          $"Timestamp: {DateTime.Now:F}\n";
             return content;
         }
     }
