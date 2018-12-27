@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
-using ExceptionNotificationCore.Exceptions.Email;
+using ExceptionNotification.Core.Exceptions.Email;
 
-namespace ExceptionNotificationCore.Email
+namespace ExceptionNotification.Core.Email
 {
     public static class EmailExceptionNotifier
     {
         private static IEmailConfiguration _configuration;
 
-        public static void SetNotifier(IEmailConfiguration configuration)
+        public static void Setup(IEmailConfiguration configuration)
         {
-            _configuration = configuration ?? throw new ConfigurationMissingException("SetNotifier failure: configuration is null.");
+            _configuration = configuration;
         }
 
         public static void NotifyException(Exception exception, NotifierOptions options)

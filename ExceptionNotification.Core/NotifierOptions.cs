@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace ExceptionNotificationCore
+namespace ExceptionNotification.Core
 {
     public class NotifierOptions
     {

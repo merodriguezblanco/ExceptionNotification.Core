@@ -3,9 +3,9 @@ using System;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
-using ExceptionNotificationCore.Email;
+using ExceptionNotification.Core.Email;
 
-namespace ExceptionNotificationCore.Middlewares
+namespace ExceptionNotification.Core.Middlewares
 {
     public class EmailExceptionMiddleware
     {

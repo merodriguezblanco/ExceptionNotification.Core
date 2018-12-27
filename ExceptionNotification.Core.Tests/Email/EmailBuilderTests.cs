@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Mail;
-using ExceptionNotificationCore.Email;
-using ExceptionNotificationCore.Exceptions.Email;
+using ExceptionNotification.Core.Email;
+using ExceptionNotification.Core.Exceptions.Email;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Xunit;
 
-namespace ExceptionNotificationCore.Tests
+namespace ExceptionNotification.Core.Tests
 {
     public class EmailBuilderTests
     {

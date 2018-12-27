@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionNotificationCore", "ExceptionNotificationCore\ExceptionNotificationCore.csproj", "{045C9C82-609E-4E00-8317-28C22C75ED0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionNotification.Core", "ExceptionNotification.Core\ExceptionNotification.Core.csproj", "{045C9C82-609E-4E00-8317-28C22C75ED0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionNotificationCore.Tests", "ExceptionNotificationCore.Tests\ExceptionNotificationCore.Tests.csproj", "{BA457D80-FF67-47F9-A5FA-1FA67D85107F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionNotification.Core.Tests", "ExceptionNotification.Core.Tests\ExceptionNotification.Core.Tests.csproj", "{BA457D80-FF67-47F9-A5FA-1FA67D85107F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

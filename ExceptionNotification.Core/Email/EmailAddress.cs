@@ -1,4 +1,4 @@
-﻿namespace ExceptionNotificationCore.Email
+﻿namespace ExceptionNotification.Core.Email
 {
     public class EmailAddress
     {

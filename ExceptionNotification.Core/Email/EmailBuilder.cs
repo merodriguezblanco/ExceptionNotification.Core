@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Mail;
-using ExceptionNotificationCore.Exceptions.Email;
+using ExceptionNotification.Core.Exceptions.Email;
 using Microsoft.AspNetCore.Http;
 
-namespace ExceptionNotificationCore.Email
+namespace ExceptionNotification.Core.Email
 {
     public static class EmailBuilder
     {
