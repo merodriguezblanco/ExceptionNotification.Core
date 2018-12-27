@@ -1,6 +1,6 @@
 # Contributing
 
-We welcome contributions to this library and discussion about its contents. Please [open an issue](/issues/new) or create a pull request on this repository to propose a change.
+We welcome contributions to this library and discussion about its contents. Please open an issue or create a pull request on this repository to propose a change.
 
 ## Creating a pull request
 1. Fork it.
