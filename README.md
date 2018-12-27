@@ -52,7 +52,7 @@ The `UseCredentials` option defaults to `true`. It can be set to `false` in case
 
 The package initialization should be setup in the `Startup.cs`:
 
-```charp
+```csharp
 public class Startup
 {
   // ...
