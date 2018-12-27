@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Mail;
+using ExceptionNotificationCore.Exceptions.Email;
 using Microsoft.AspNetCore.Http;
 
 namespace ExceptionNotificationCore.Email
@@ -8,6 +10,16 @@ namespace ExceptionNotificationCore.Email
     {
         public static MailMessage ComposeEmail(Exception exception, IEmailConfiguration emailConfiguration, NotifierOptions notifierOptions)
         {
+            if (IsSenderNull(emailConfiguration.Sender))
+            {
+                throw new SenderNullException("ComposeEmail failure: Sender is null.");
+            }
+
+            if (IsRecipientsCollectionEmpty(emailConfiguration.Recipients))
+            {
+                throw new EmptyRecipientsException("ComposeEmail failure: Recipients collection is empty.");
+            }
+
             var message = new MailMessage()
             {
                 Subject = ComposeSubject(notifierOptions),
@@ -21,6 +33,16 @@ namespace ExceptionNotificationCore.Email
             });
 
             return message;
+        }
+
+        private static bool IsSenderNull(EmailAddress sender)
+        {
+            return sender == null;
+        }
+
+        private static bool IsRecipientsCollectionEmpty(ICollection<EmailAddress> recipients)
+        {
+            return recipients == null || recipients.Count == 0;
         }
 
         private static string ComposeSubject(NotifierOptions notifierOptions)

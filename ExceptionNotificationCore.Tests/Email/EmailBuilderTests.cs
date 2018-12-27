@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Mail;
 using ExceptionNotificationCore.Email;
+using ExceptionNotificationCore.Exceptions.Email;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Xunit;
@@ -38,6 +39,30 @@ namespace ExceptionNotificationCore.Tests
                 Environment = "Test",
                 ProjectName = "Fried Chicken"
             };
+        }
+
+        [Fact]
+        public void ComposeEmailThrowsExceptionWhenSenderIsNull()
+        {
+            _emailConfiguration.Sender = null;
+
+            var exception = Assert.Throws<SenderNullException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions));
+            Assert.Equal("ComposeEmail failure: Sender is null.", exception.Message);
+        }
+
+        [Fact]
+        public void ComposeEmailThrowsExceptionWhenRecipientsCollectionIsEmpty()
+        {
+            _emailConfiguration.Recipients = null;
+
+            var exception = Assert.Throws<EmptyRecipientsException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions));
+            Assert.Equal("ComposeEmail failure: Recipients collection is empty.", exception.Message);
+
+            _emailConfiguration.Recipients = new List<EmailAddress>();
+
+            exception = Assert.Throws<EmptyRecipientsException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions));
+            Assert.Equal("ComposeEmail failure: Recipients collection is empty.", exception.Message);
+
         }
 
         [Fact]
