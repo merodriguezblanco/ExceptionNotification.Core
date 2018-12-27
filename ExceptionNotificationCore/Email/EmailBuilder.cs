@@ -27,7 +27,7 @@ namespace ExceptionNotificationCore.Email
         {
             var projectName = notifierOptions.ProjectName;
             var environment = notifierOptions.Environment;
-            var subject = $"[{projectName} {environment}] EXCEPTION!";
+            var subject = $"[{projectName} - {environment}] EXCEPTION!";
 
             return subject;
         }
@@ -43,13 +43,13 @@ namespace ExceptionNotificationCore.Email
 
             if (request != null)
             {
-                content += "--------\n" +
+                content += "\n\n--------\n" +
                            "Request:\n" +
                            "--------\n\n" +
                            RequestContext(request);
             }
 
-            content += "-----------\n" +
+            content += "\n\n-----------\n" +
                        "Stacktrace:\n" +
                        "-----------\n\n" +
                        exception.StackTrace;
