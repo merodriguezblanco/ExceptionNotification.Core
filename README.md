@@ -19,7 +19,7 @@
 Install this package using the NuGet command line:
 
 ```bash
-PM> Install-Package ExceptionNotification.Core -Version 1.0.0
+PM> Install-Package ExceptionNotification.Core -Version 1.1.0
 ```
 
 ## Usage
