@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using System.Reflection;
 using ExceptionNotification.Core.Exceptions.Email;
 
 namespace ExceptionNotification.Core.Email
@@ -12,6 +13,17 @@ namespace ExceptionNotification.Core.Email
         public static void Setup(IEmailConfiguration configuration)
         {
             _configuration = configuration;
+        }
+
+        public static void NotifyException(Exception exception)
+        {
+            var notifierOptions = new NotifierOptions
+            {
+                ProjectName = Assembly.GetEntryAssembly().GetName().Name,
+                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+            };
+
+            NotifyException(exception, notifierOptions);
         }
 
         public static void NotifyException(Exception exception, NotifierOptions options)
