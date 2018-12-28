@@ -1,5 +1,8 @@
 # ExceptionNotification.Core
 
+[![NuGet](https://img.shields.io/nuget/v/ExceptionNotification.Core.svg?style=flat-square)](https://www.nuget.org/packages/ExceptionNotification.Core)
+[![Build Status](https://travis-ci.com/merodriguezblanco/ExceptionNotification.Core.svg?branch=master)](https://travis-ci.com/merodriguezblanco/ExceptionNotification.Core)
+
 ## Overview
 
 `ExceptionNotification.Core` is a NET core package that provides a set of notifiers for sending exception notifications when errors occur in your NET Core API. So far, the notifiers can deliver notifications only via e-mail. Its idea is based on the great [ExceptionNotification gem](https://github.com/smartinez87/exception_notification) that provides notifiers for Ruby applications.
@@ -27,8 +30,6 @@ To setup the package you must add some credentials to your `appsettings.<environ
 
 ```json
 {
-  // ...
-
   "ExceptionEmailConfiguration": {
     "SmtpServer": "your.server.com",
     "SmtpPort": "25",
