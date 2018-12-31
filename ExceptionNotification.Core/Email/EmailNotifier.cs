@@ -6,16 +6,16 @@ using ExceptionNotification.Core.Exceptions.Email;
 
 namespace ExceptionNotification.Core.Email
 {
-    public static class EmailExceptionNotifier
+    public class EmailNotifier : BaseNotifier
     {
-        private static IEmailConfiguration _configuration;
+        private readonly IEmailConfiguration _configuration;
 
-        public static void Setup(IEmailConfiguration configuration)
+        public EmailNotifier(IEmailConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public static void NotifyException(Exception exception)
+        public override void FireNotification(Exception exception)
         {
             var notifierOptions = new NotifierOptions
             {
@@ -23,19 +23,19 @@ namespace ExceptionNotification.Core.Email
                 Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
             };
 
-            NotifyException(exception, notifierOptions);
+            FireNotification(exception, notifierOptions);
         }
 
-        public static void NotifyException(Exception exception, NotifierOptions options)
+        public override void FireNotification(Exception exception, NotifierOptions options)
         {
             if (_configuration == null)
             {
-                throw new ConfigurationMissingException("NotifyException failure: configuration is null.");
+                throw new ConfigurationMissingException("FireNotification failure: configuration is null.");
             }
 
             if (exception == null)
             {
-                throw new ExceptionMissingException("NotifyException failure: exception is null.");
+                throw new ExceptionMissingException("FireNotification failure: exception is null.");
             }
 
             var message = EmailBuilder.ComposeEmail(exception, _configuration, options);
