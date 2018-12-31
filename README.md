@@ -5,7 +5,7 @@
 
 ## Overview
 
-`ExceptionNotification.Core` is a NET core package that provides a set of notifiers for sending exception notifications when errors occur in your NET Core API. So far, the notifiers can deliver notifications only via e-mail. Its idea is based on the great [ExceptionNotification gem](https://github.com/smartinez87/exception_notification) that provides notifiers for Ruby applications.
+`ExceptionNotification.Core` is a NET core package that provides a set of notifiers for sending exception notifications when errors occur in your NET Core API. So far, the notifiers can deliver notifications only via e-mail and hipchat. Its idea is based on the great [ExceptionNotification gem](https://github.com/smartinez87/exception_notification) that provides notifiers for Ruby applications.
 
 ## **WARNING: This plugin is in early development stage.**
 
@@ -19,7 +19,7 @@
 Install this package using the NuGet command line:
 
 ```bash
-PM> Install-Package ExceptionNotification.Core -Version 1.1.0
+PM> Install-Package ExceptionNotification.Core -Version 1.2.0
 ```
 
 ## Usage
@@ -30,20 +30,26 @@ To setup the package you must add some credentials to your `appsettings.<environ
 
 ```json
 {
-  "ExceptionEmailConfiguration": {
-    "SmtpServer": "your.server.com",
-    "SmtpPort": "25",
-    "SmtpUser": "username",
-    "SmtpPassword": "password",
-    "EnableSsl": true,
-    "UseCredentials": true,
-    "Sender": {
-      "DisplayName": "John Doe",
-      "Address": "johndoe@server.com"
+  "ExceptionNotification": {
+    "Email": {
+      "SmtpServer": "your.server.com",
+      "SmtpPort": "25",
+      "SmtpUser": "username",
+      "SmtpPassword": "password",
+      "EnableSsl": true,
+      "UseCredentials": true,
+      "Sender": {
+        "DisplayName": "John Doe",
+        "Address": "johndoe@server.com"
+      },
+      "Recipients": {
+        "DisplayName": "Mary",
+        "Address": "mary@test.com"
+      }
     },
-    "Recipients": {
-      "DisplayName": "Mary",
-      "Address": "mary@test.com"
+    "Hipchat": {
+      "RoomName": "Your Room",
+      "ApiToken": "D12@....."
     }
   }
 }
@@ -63,20 +69,20 @@ public class Startup
     // ...
 
     // Bind e-mail configuration from appsettings file.
-    var emailConfiguration = new EmailConfiguration();
-    Configuration.Bind("ExceptionEmailConfiguration", emailConfiguration);
+    var configuration = new ExceptionNotificationConfiguration();
+    Configuration.Bind("ExceptionNotification", configuration);
 
-    EmailExceptionNotifier.Setup(emailConfiguration);
+    ExceptionNotifier.Setup(configuration);
 
     // Add singleton service to be used by the middleware.
-    services.AddSingleton<IEmailExceptionNotifier>(emailConfiguration);
+    services.AddSingleton<IExceptionNotificationConfiguration>(configuration);
   }
 
   public void Configure(IApplicationBuilder app)
   {
     // ...
 
-    app.UseMiddleware<EmailExceptionMiddleware>();
+    app.UseMiddleware<ExceptionMiddleware>();
   }
 }
 ```
@@ -93,7 +99,7 @@ try
 }
 catch(Exception exception)
 {
-  EmailExceptionNotification.NotifyException(exception);
+  ExceptionNotifier.NotifyException(exception);
 }
 ```
 
@@ -102,7 +108,8 @@ catch(Exception exception)
 This package currently provides an e-mail notifier. It would be ideal to implement the following notifiers as well:
 
 * Slack
-* Hipchat
+
+More testing is needed as well.
 
 ## Contributing
 

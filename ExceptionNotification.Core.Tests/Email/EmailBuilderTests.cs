@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Xunit;
 
-namespace ExceptionNotification.Core.Tests
+namespace ExceptionNotification.Core.Tests.Email
 {
     public class EmailBuilderTests
     {
         private readonly Exception _exception;
 
-        private readonly IEmailConfiguration _emailConfiguration;
+        private readonly EmailConfiguration _emailConfiguration;
 
         private readonly NotifierOptions _notifierOptions;
 
@@ -46,7 +46,7 @@ namespace ExceptionNotification.Core.Tests
         {
             _emailConfiguration.Sender = null;
 
-            var exception = Assert.Throws<SenderNullException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions));
+            var exception = Assert.Throws<SenderNullException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null));
             Assert.Equal("ComposeEmail failure: Sender is null.", exception.Message);
         }
 
@@ -55,12 +55,12 @@ namespace ExceptionNotification.Core.Tests
         {
             _emailConfiguration.Recipients = null;
 
-            var exception = Assert.Throws<EmptyRecipientsException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions));
+            var exception = Assert.Throws<EmptyRecipientsException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null));
             Assert.Equal("ComposeEmail failure: Recipients collection is empty.", exception.Message);
 
             _emailConfiguration.Recipients = new List<EmailAddress>();
 
-            exception = Assert.Throws<EmptyRecipientsException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions));
+            exception = Assert.Throws<EmptyRecipientsException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null));
             Assert.Equal("ComposeEmail failure: Recipients collection is empty.", exception.Message);
 
         }
@@ -68,7 +68,7 @@ namespace ExceptionNotification.Core.Tests
         [Fact]
         public void ComposeEmailReturnsMailMessage()
         {
-            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions);
+            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null);
 
             Assert.IsType<MailMessage>(email);
             Assert.Equal("[Fried Chicken - Test] EXCEPTION!", email.Subject);
@@ -84,7 +84,7 @@ namespace ExceptionNotification.Core.Tests
         [Fact]
         public void ComposeEmailBuildsMessageBody()
         {
-            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions);
+            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null);
 
             Assert.IsType<MailMessage>(email);
             Assert.Contains("------------------\nException Message:\n------------------\n\nThis is an exception!", email.Body);
@@ -104,8 +104,8 @@ namespace ExceptionNotification.Core.Tests
                     Method = HttpMethod.Get.ToString()
                 }
             };
-            _notifierOptions.Request = new DefaultHttpRequest(httpContext);
-            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions);
+            var request = new DefaultHttpRequest(httpContext);
+            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, request);
 
             Assert.IsType<MailMessage>(email);
             Assert.Contains("------------------\nException Message:\n------------------\n\nThis is an exception!", email.Body);

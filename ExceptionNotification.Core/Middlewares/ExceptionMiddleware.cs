@@ -3,15 +3,14 @@ using System;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
-using ExceptionNotification.Core.Email;
 
 namespace ExceptionNotification.Core.Middlewares
 {
-    public class EmailExceptionMiddleware
+    public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public EmailExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next)
         {
             _next = next;
         }
@@ -30,13 +29,7 @@ namespace ExceptionNotification.Core.Middlewares
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var notifierOptions = new NotifierOptions
-            {
-                ProjectName = Assembly.GetEntryAssembly().GetName().Name,
-                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-                Request = context.Request
-            };
-            EmailExceptionNotifier.NotifyException(exception, notifierOptions);
+            ExceptionNotifier.NotifyException(exception, context.Request);
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
