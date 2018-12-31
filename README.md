@@ -68,7 +68,7 @@ public class Startup
   {
     // ...
 
-    // Bind e-mail configuration from appsettings file.
+    // Bind configuration from appsettings file.
     var configuration = new ExceptionNotificationConfiguration();
     Configuration.Bind("ExceptionNotification", configuration);
 
@@ -90,7 +90,7 @@ public class Startup
 
 ## Background process notifications
 
-In case that you want to send notifications from a background process, you can make use of the `EmailExceptionNotification` interface:
+In case that you want to send notifications from a background process, you can make use of the `ExceptionNotifier` interface:
 
 ```csharp
 try
@@ -105,7 +105,7 @@ catch(Exception exception)
 
 ## TODO
 
-This package currently provides an e-mail notifier. It would be ideal to implement the following notifiers as well:
+This package currently provides e-mail and HipChat notifiers. It would be ideal to implement the following notifiers as well:
 
 * Slack
 
