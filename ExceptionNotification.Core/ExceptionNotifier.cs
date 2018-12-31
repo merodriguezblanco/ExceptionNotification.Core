@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExceptionNotification.Core.Email;
+using ExceptionNotification.Core.Hipchat;
+using Microsoft.AspNetCore.Http;
 
 namespace ExceptionNotification.Core
 {
@@ -8,9 +10,9 @@ namespace ExceptionNotification.Core
     {
         private static readonly List<BaseNotifier> _notifiers = new List<BaseNotifier>();
 
-        private static IConfiguration _configuration;
+        private static IExceptionNotifierConfiguration _configuration;
 
-        public static void Setup(IConfiguration configuration)
+        public static void Setup(IExceptionNotifierConfiguration configuration)
         {
             _configuration = configuration;
 
@@ -18,9 +20,14 @@ namespace ExceptionNotification.Core
             {
                 _notifiers.Add(new EmailNotifier(_configuration.Email));
             }
+
+            if (_configuration.Hipchat != null)
+            {
+                _notifiers.Add(new HipchatNotifier(_configuration.Hipchat));
+            }
         }
 
-        public static void Notify(Exception exception)
+        public static void NotifyException(Exception exception)
         {
             _notifiers.ForEach(notifier =>
             {
@@ -28,11 +35,11 @@ namespace ExceptionNotification.Core
             });
         }
 
-        public static void NotifyException(Exception exception, NotifierOptions notifierOptions)
+        public static void NotifyException(Exception exception, HttpRequest request)
         {
             _notifiers.ForEach(notifier =>
             {
-                notifier.FireNotification(exception, notifierOptions);
+                notifier.FireNotification(exception, request);
             });
         }
     }

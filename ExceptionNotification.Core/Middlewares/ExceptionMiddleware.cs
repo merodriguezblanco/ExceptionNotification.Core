@@ -29,13 +29,7 @@ namespace ExceptionNotification.Core.Middlewares
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var notifierOptions = new NotifierOptions
-            {
-                ProjectName = Assembly.GetEntryAssembly().GetName().Name,
-                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-                Request = context.Request
-            };
-            ExceptionNotifier.NotifyException(exception, notifierOptions);
+            ExceptionNotifier.NotifyException(exception, context.Request);
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

@@ -1,32 +1,26 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
-using System.Reflection;
 using ExceptionNotification.Core.Exceptions.Email;
+using Microsoft.AspNetCore.Http;
 
 namespace ExceptionNotification.Core.Email
 {
     public class EmailNotifier : BaseNotifier
     {
-        private readonly IEmailConfiguration _configuration;
+        private readonly EmailConfiguration _configuration;
 
-        public EmailNotifier(IEmailConfiguration configuration)
+        public EmailNotifier(EmailConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         public override void FireNotification(Exception exception)
         {
-            var notifierOptions = new NotifierOptions
-            {
-                ProjectName = Assembly.GetEntryAssembly().GetName().Name,
-                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
-            };
-
-            FireNotification(exception, notifierOptions);
+            FireNotification(exception, null);
         }
 
-        public override void FireNotification(Exception exception, NotifierOptions options)
+        public override void FireNotification(Exception exception, HttpRequest request)
         {
             if (_configuration == null)
             {
@@ -38,19 +32,27 @@ namespace ExceptionNotification.Core.Email
                 throw new ExceptionMissingException("FireNotification failure: exception is null.");
             }
 
-            var message = EmailBuilder.ComposeEmail(exception, _configuration, options);
+            var message = EmailBuilder.ComposeEmail(exception, _configuration, NotifierOptions, request);
 
-            using (var client = new SmtpClient(_configuration.SmtpServer, _configuration.SmtpPort))
+            try
             {
-                client.UseDefaultCredentials = false;
-
-                if (_configuration.UseCredentials)
+                using (var client = new SmtpClient(_configuration.SmtpServer, _configuration.SmtpPort))
                 {
-                    client.Credentials = new NetworkCredential(_configuration.SmtpUser, _configuration.SmtpPassword);
-                }
+                    client.UseDefaultCredentials = false;
 
-                client.EnableSsl = _configuration.EnableSsl;
-                client.Send(message);
+                    if (_configuration.UseCredentials)
+                    {
+                        client.Credentials =
+                            new NetworkCredential(_configuration.SmtpUser, _configuration.SmtpPassword);
+                    }
+
+                    client.EnableSsl = _configuration.EnableSsl;
+                    client.Send(message);
+                }
+            }
+            catch (Exception)
+            {
+                //
             }
         }
     }

@@ -8,7 +8,7 @@ namespace ExceptionNotification.Core.Email
 {
     public static class EmailBuilder
     {
-        public static MailMessage ComposeEmail(Exception exception, IEmailConfiguration emailConfiguration, NotifierOptions notifierOptions)
+        public static MailMessage ComposeEmail(Exception exception, EmailConfiguration emailConfiguration, NotifierOptions notifierOptions, HttpRequest request)
         {
             if (IsSenderNull(emailConfiguration.Sender))
             {
@@ -24,7 +24,7 @@ namespace ExceptionNotification.Core.Email
             {
                 Subject = ComposeSubject(notifierOptions),
                 From = new MailAddress(emailConfiguration.Sender.Address, emailConfiguration.Sender.DisplayName),
-                Body = ComposeContent(exception, notifierOptions.Request)
+                Body = ComposeContent(exception, request)
             };
 
             emailConfiguration.Recipients.ForEach(r =>

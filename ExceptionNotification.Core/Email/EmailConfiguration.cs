@@ -2,7 +2,7 @@
 
 namespace ExceptionNotification.Core.Email
 {
-    public class EmailConfiguration : IEmailConfiguration
+    public class EmailConfiguration
     {
         public string SmtpServer { get; set; }
 

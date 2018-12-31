@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HipChat.Net.Portable" Version="0.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.3" />
   </ItemGroup>
 

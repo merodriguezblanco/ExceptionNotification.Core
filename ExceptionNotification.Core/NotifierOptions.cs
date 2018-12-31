@@ -7,7 +7,5 @@ namespace ExceptionNotification.Core
         public string ProjectName { get; set; }
 
         public string Environment { get; set; }
-
-        public HttpRequest Request { get; set; }
     }
 }
