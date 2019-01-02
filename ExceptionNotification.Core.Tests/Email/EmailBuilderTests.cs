@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Mail;
 using ExceptionNotification.Core.Email;
 using ExceptionNotification.Core.Exceptions.Email;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Xunit;
 
 namespace ExceptionNotification.Core.Tests.Email
@@ -42,25 +39,25 @@ namespace ExceptionNotification.Core.Tests.Email
         }
 
         [Fact]
-        public void ComposeEmailThrowsExceptionWhenSenderIsNull()
+        public void EmailBuilderThrowsExceptionWhenSenderIsNull()
         {
             _emailConfiguration.Sender = null;
 
-            var exception = Assert.Throws<SenderNullException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null));
+            var exception = Assert.Throws<SenderNullException>(() => new EmailBuilder(_emailConfiguration, _exception, _notifierOptions, null));
             Assert.Equal("ComposeEmail failure: Sender is null.", exception.Message);
         }
 
         [Fact]
-        public void ComposeEmailThrowsExceptionWhenRecipientsCollectionIsEmpty()
+        public void EmailBuilderThrowsExceptionWhenRecipientsCollectionIsEmpty()
         {
             _emailConfiguration.Recipients = null;
 
-            var exception = Assert.Throws<EmptyRecipientsException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null));
+            var exception = Assert.Throws<EmptyRecipientsException>(() => new EmailBuilder(_emailConfiguration, _exception, _notifierOptions, null));
             Assert.Equal("ComposeEmail failure: Recipients collection is empty.", exception.Message);
 
             _emailConfiguration.Recipients = new List<EmailAddress>();
 
-            exception = Assert.Throws<EmptyRecipientsException>(() => EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null));
+            exception = Assert.Throws<EmptyRecipientsException>(() => new EmailBuilder(_emailConfiguration, _exception, _notifierOptions, null));
             Assert.Equal("ComposeEmail failure: Recipients collection is empty.", exception.Message);
 
         }
@@ -68,7 +65,7 @@ namespace ExceptionNotification.Core.Tests.Email
         [Fact]
         public void ComposeEmailReturnsMailMessage()
         {
-            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null);
+            var email = new EmailBuilder(_emailConfiguration, _exception, _notifierOptions, null).ComposeEmail();
 
             Assert.IsType<MailMessage>(email);
             Assert.Equal("[Fried Chicken - Test] EXCEPTION!", email.Subject);
@@ -79,38 +76,6 @@ namespace ExceptionNotification.Core.Tests.Email
             Assert.Equal("Recipient 1", email.To[0].DisplayName);
             Assert.Equal("recipient_2@test.com", email.To[1].Address);
             Assert.Equal("Recipient 2", email.To[1].DisplayName);
-        }
-
-        [Fact]
-        public void ComposeEmailBuildsMessageBody()
-        {
-            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, null);
-
-            Assert.IsType<MailMessage>(email);
-            Assert.Contains("------------------\nException Message:\n------------------\n\nThis is an exception!", email.Body);
-            Assert.DoesNotContain("--------\nRequest:\n--------\n\n", email.Body);
-            Assert.Contains("-----------\nStacktrace:\n-----------\n\n", email.Body);
-        }
-
-        [Fact]
-        public void ComposeEmailBuildsMessageBodyWithRequest()
-        {
-            var httpContext = new DefaultHttpContext
-            {
-                Request =
-                {
-                    Scheme = "http",
-                    Path = "/some-path",
-                    Method = HttpMethod.Get.ToString()
-                }
-            };
-            var request = new DefaultHttpRequest(httpContext);
-            var email = EmailBuilder.ComposeEmail(_exception, _emailConfiguration, _notifierOptions, request);
-
-            Assert.IsType<MailMessage>(email);
-            Assert.Contains("------------------\nException Message:\n------------------\n\nThis is an exception!", email.Body);
-            Assert.Contains("--------\nRequest:\n--------\n\nURL: /some-path\nHTTP Method: GET\nTimestamp: ", email.Body);
-            Assert.Contains("-----------\nStacktrace:\n-----------\n\n", email.Body);
         }
     }
 }

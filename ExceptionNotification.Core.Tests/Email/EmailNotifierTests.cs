@@ -1,6 +1,6 @@
 ﻿using System;
 using ExceptionNotification.Core.Email;
-using ExceptionNotification.Core.Exceptions.Email;
+using ExceptionNotification.Core.Exceptions;
 using Xunit;
 
 namespace ExceptionNotification.Core.Tests.Email

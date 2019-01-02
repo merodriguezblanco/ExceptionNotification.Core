@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
-using ExceptionNotification.Core.Exceptions.Email;
+using ExceptionNotification.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace ExceptionNotification.Core.Email
@@ -32,7 +32,7 @@ namespace ExceptionNotification.Core.Email
                 throw new ExceptionMissingException("FireNotification failure: exception is null.");
             }
 
-            var message = EmailBuilder.ComposeEmail(exception, _configuration, NotifierOptions, request);
+            var message = new EmailBuilder(_configuration, exception, NotifierOptions, request).ComposeEmail();
 
             try
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExceptionNotification.Core.Exceptions.Email
+namespace ExceptionNotification.Core.Exceptions
 {
     public class ConfigurationMissingException : Exception
     {

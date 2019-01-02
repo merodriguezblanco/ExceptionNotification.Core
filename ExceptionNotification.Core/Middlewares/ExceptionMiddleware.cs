@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Net;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ExceptionNotification.Core.Middlewares

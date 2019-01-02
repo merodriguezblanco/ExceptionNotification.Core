@@ -1,5 +1,5 @@
 ﻿using System;
-using ExceptionNotification.Core.Exceptions.Email;
+using ExceptionNotification.Core.Exceptions;
 using ExceptionNotification.Core.Hipchat;
 using Xunit;
 
