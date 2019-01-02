@@ -36,18 +36,14 @@ namespace ExceptionNotification.Core.Hipchat
             try
             {
                 var client = new HipChatClient(new ApiConnection(new Credentials(_configuration.ApiToken)));
-                client.Rooms.SendNotificationAsync(_configuration.RoomName, NotificationMessage(), true, MessageFormat.Html,
+                var message = new HipchatMessageBuilder(exception, NotifierOptions, request).ComposeMessage();
+                client.Rooms.SendNotificationAsync(_configuration.RoomName, message, true, MessageFormat.Text,
                     MessageColor.Red);
             }
             catch (Exception)
             {
                 //
             }
-        }
-
-        private string NotificationMessage()
-        {
-            return $"[{NotifierOptions.ProjectName} - {NotifierOptions.Environment}] EXCEPTION!";
         }
     }
 }

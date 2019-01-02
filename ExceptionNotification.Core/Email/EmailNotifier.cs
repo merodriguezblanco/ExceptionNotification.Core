@@ -32,7 +32,7 @@ namespace ExceptionNotification.Core.Email
                 throw new ExceptionMissingException("FireNotification failure: exception is null.");
             }
 
-            var message = EmailBuilder.ComposeEmail(exception, _configuration, NotifierOptions, request);
+            var message = new EmailBuilder(_configuration, exception, NotifierOptions, request).ComposeEmail();
 
             try
             {
