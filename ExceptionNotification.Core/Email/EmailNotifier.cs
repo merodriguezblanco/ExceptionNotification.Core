@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
-using ExceptionNotification.Core.Exceptions.Email;
+using ExceptionNotification.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace ExceptionNotification.Core.Email

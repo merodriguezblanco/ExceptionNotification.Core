@@ -1,5 +1,5 @@
 ﻿using System;
-using ExceptionNotification.Core.Exceptions.Email;
+using ExceptionNotification.Core.Exceptions;
 using HipChat.Net;
 using HipChat.Net.Http;
 using HipChat.Net.Models.Request;
