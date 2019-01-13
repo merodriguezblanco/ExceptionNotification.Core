@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ExceptionNotification.Core.Email;
 using ExceptionNotification.Core.Hipchat;
+using ExceptionNotification.Core.Slack;
 using Microsoft.AspNetCore.Http;
 
 namespace ExceptionNotification.Core
@@ -24,6 +25,11 @@ namespace ExceptionNotification.Core
             if (_configuration.Hipchat != null)
             {
                 _notifiers.Add(new HipchatNotifier(_configuration.Hipchat));
+            }
+
+            if (_configuration.Slack != null)
+            {
+                _notifiers.Add(new SlackNotifier(_configuration.Slack));
             }
         }
 

@@ -6,6 +6,7 @@ using Xunit;
 
 namespace ExceptionNotification.Core.Tests
 {
+    [Trait("Category", "Unit")]
     public class ExceptionMessageBuilderTests
     {
         private readonly NotifierOptions _notifierOptions;

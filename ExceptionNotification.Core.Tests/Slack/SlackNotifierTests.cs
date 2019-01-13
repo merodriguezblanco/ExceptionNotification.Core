@@ -1,17 +1,17 @@
 ﻿using System;
 using ExceptionNotification.Core.Exceptions;
-using ExceptionNotification.Core.Hipchat;
+using ExceptionNotification.Core.Slack;
 using Xunit;
 
-namespace ExceptionNotification.Core.Tests.Hipchat
+namespace ExceptionNotification.Core.Tests.Slack
 {
     [Trait("Category", "Unit")]
-    public class HipchatNotifierTests
+    public class SlackNotifierTests
     {
         [Fact]
         public void FireExceptionThrowsExceptionWhenConfigurationIsNull()
         {
-            var notifier = new HipchatNotifier(null);
+            var notifier = new SlackNotifier(null);
 
             var exception = Assert.Throws<ConfigurationMissingException>(() => notifier.FireNotification(new Exception(), null));
             Assert.Equal("FireNotification failure: configuration is null.", exception.Message);
@@ -20,7 +20,7 @@ namespace ExceptionNotification.Core.Tests.Hipchat
         [Fact]
         public void FireExceptionThrowsExceptionWhenExceptionIsNull()
         {
-            var notifier = new HipchatNotifier(new HipchatConfiguration());
+            var notifier = new SlackNotifier(new SlackConfiguration());
 
             var exception = Assert.Throws<ExceptionMissingException>(() => notifier.FireNotification(null, null));
             Assert.Equal("FireNotification failure: exception is null.", exception.Message);

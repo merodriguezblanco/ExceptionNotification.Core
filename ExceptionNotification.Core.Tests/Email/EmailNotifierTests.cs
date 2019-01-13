@@ -5,6 +5,7 @@ using Xunit;
 
 namespace ExceptionNotification.Core.Tests.Email
 {
+    [Trait("Category", "Unit")]
     public class EmailNotifierTests
     {
         [Fact]
