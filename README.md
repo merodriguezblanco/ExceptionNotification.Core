@@ -5,7 +5,7 @@
 
 ## Overview
 
-`ExceptionNotification.Core` is a NET core package that provides a set of notifiers for sending exception notifications when errors occur in your NET Core API. So far, the notifiers can deliver notifications only via e-mail and hipchat. Its idea is based on the great [ExceptionNotification gem](https://github.com/smartinez87/exception_notification) that provides notifiers for Ruby applications.
+`ExceptionNotification.Core` is a NET core package that provides a set of notifiers for sending exception notifications when errors occur in your NET Core API. So far, the notifiers can deliver notifications only via e-mail, HipChat, and Slack. Its idea is based on the great [ExceptionNotification gem](https://github.com/smartinez87/exception_notification) that provides notifiers for Ruby applications.
 
 ## **WARNING: This plugin is in early development stage.**
 
@@ -19,7 +19,7 @@
 Install this package using the NuGet command line:
 
 ```bash
-PM> Install-Package ExceptionNotification.Core -Version 1.3.0
+PM> Install-Package ExceptionNotification.Core -Version 1.4.0
 ```
 
 ## Usage
@@ -50,12 +50,35 @@ To setup the package you must add some credentials to your `appsettings.<environ
     "Hipchat": {
       "RoomName": "Your Room",
       "ApiToken": "D12@....."
+    },
+    "Slack": {
+      "WebhookUri": "https://...",
+      "Channel": "#channel-name",
+      "Username": "aperson"
     }
   }
 }
 ```
 
-The `UseCredentials` option defaults to `true`. It can be set to `false` in case that you are using a relay server to send e-mails. In such case, you don't need to specify the `SmtpUser` and `SmtpPassword`.
+### Email
+* `SmtpServer` - *required* - Specifies the remote e-mail server address.
+* `SmtpPort` - *required* - Port used by the e-mail server.
+* `SmtpUser` - *optional* - If your e-mail server requires authentication, this setting specifies the username.
+* `SmtpPassword` - *optional* - If your e-mail server requires authentication, this setting specifies the password.
+* `EnableSsl` - *optional*.
+* `UseCredentials`- *optional* - Defaults to `true`. It can be set to `false` in case that you are using a relay server to send e-mails. In such case, you don't need to specify the `SmtpUser` and `SmtpPassword`.
+* `Sender`- *required* - Specifices who the notification message is from.
+* `Recipients`- *required* - List of recipients that will receive the notification message.
+
+### HipChat
+* `RoomName` - *required* - Specifies the HipcHat's room name where the notification message will be published to.
+* `ApiToken`- *required* - The [API token](https://www.hipchat.com/docs/apiv2/method/generate_token) that allows access to your HipChat account.
+
+### Slack Options
+* `WebhookUri` - *required* - The incoming [Webhook URI](https://api.slack.com/incoming-webhooks) on Slack.
+* `Channel` - *optional* - Channel's name in which the message will appear.
+* `Username` - *optional* - Username of the bot.
+
 
 The package initialization should be setup in the `Startup.cs`:
 
@@ -105,11 +128,8 @@ catch(Exception exception)
 
 ## TODO
 
-This package currently provides e-mail and HipChat notifiers. It would be ideal to implement the following notifiers as well:
-
-* Slack
-
-More testing is needed as well.
+This package currently provides e-mail, HipChat, and Slack notifiers. It would be ideal to implement other notifiers as well.
+More testing is also needed.
 
 ## Contributing
 
