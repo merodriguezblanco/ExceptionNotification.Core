@@ -44,7 +44,7 @@ namespace ExceptionNotification.Core.Tests.Email
             _emailConfiguration.Sender = null;
 
             var exception = Assert.Throws<SenderNullException>(() => new EmailBuilder(_emailConfiguration, _exception, _notifierOptions, null));
-            Assert.Equal("ComposeEmail failure: Sender is null.", exception.Message);
+            Assert.Equal("EmailBuilder failure: Sender is null.", exception.Message);
         }
 
         [Fact]
@@ -53,13 +53,12 @@ namespace ExceptionNotification.Core.Tests.Email
             _emailConfiguration.Recipients = null;
 
             var exception = Assert.Throws<EmptyRecipientsException>(() => new EmailBuilder(_emailConfiguration, _exception, _notifierOptions, null));
-            Assert.Equal("ComposeEmail failure: Recipients collection is empty.", exception.Message);
+            Assert.Equal("EmailBuilder failure: Recipients collection is empty.", exception.Message);
 
             _emailConfiguration.Recipients = new List<EmailAddress>();
 
             exception = Assert.Throws<EmptyRecipientsException>(() => new EmailBuilder(_emailConfiguration, _exception, _notifierOptions, null));
-            Assert.Equal("ComposeEmail failure: Recipients collection is empty.", exception.Message);
-
+            Assert.Equal("EmailBuilder failure: Recipients collection is empty.", exception.Message);
         }
 
         [Fact]

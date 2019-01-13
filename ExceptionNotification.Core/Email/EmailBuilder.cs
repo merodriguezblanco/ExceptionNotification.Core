@@ -15,12 +15,12 @@ namespace ExceptionNotification.Core.Email
         {
             if (IsSenderNull(configuration.Sender))
             {
-                throw new SenderNullException("ComposeEmail failure: Sender is null.");
+                throw new SenderNullException("EmailBuilder failure: Sender is null.");
             }
 
             if (IsRecipientsCollectionEmpty(configuration.Recipients))
             {
-                throw new EmptyRecipientsException("ComposeEmail failure: Recipients collection is empty.");
+                throw new EmptyRecipientsException("EmailBuilder failure: Recipients collection is empty.");
             }
 
             _configuration = configuration;
