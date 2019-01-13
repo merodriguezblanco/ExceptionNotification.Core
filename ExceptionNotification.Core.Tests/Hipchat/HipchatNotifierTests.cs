@@ -5,6 +5,7 @@ using Xunit;
 
 namespace ExceptionNotification.Core.Tests.Hipchat
 {
+    [Trait("Category", "Unit")]
     public class HipchatNotifierTests
     {
         [Fact]

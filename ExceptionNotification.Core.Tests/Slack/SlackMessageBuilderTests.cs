@@ -5,6 +5,7 @@ using Xunit;
 
 namespace ExceptionNotification.Core.Tests.Slack
 {
+    [Trait("Category", "Unit")]
     public class SlackMessageBuilderTests
     {
         private readonly Exception _exception;

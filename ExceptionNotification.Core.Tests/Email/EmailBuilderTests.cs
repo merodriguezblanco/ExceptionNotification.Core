@@ -7,6 +7,7 @@ using Xunit;
 
 namespace ExceptionNotification.Core.Tests.Email
 {
+    [Trait("Category", "Unit")]
     public class EmailBuilderTests
     {
         private readonly Exception _exception;
