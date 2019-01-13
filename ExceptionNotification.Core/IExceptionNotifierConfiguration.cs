@@ -1,5 +1,6 @@
 ﻿using ExceptionNotification.Core.Email;
 using ExceptionNotification.Core.Hipchat;
+using ExceptionNotification.Core.Slack;
 
 namespace ExceptionNotification.Core
 {
@@ -8,5 +9,7 @@ namespace ExceptionNotification.Core
         EmailConfiguration Email { get; set; }
 
         HipchatConfiguration Hipchat { get; set; }
+
+        SlackConfiguration Slack { get; set; }
     }
 }
