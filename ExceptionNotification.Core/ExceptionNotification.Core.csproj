@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <Description>ExceptionNotification.Core is a NET core package that provides a set of notifiers for sending exception notifications when errors occur in your NET Core API.</Description>
     <Copyright>MIT</Copyright>
     <PackageLicenseUrl>https://github.com/merodriguezblanco/ExceptionNotification.Core/blob/master/LICENSE</PackageLicenseUrl>
