@@ -9,9 +9,17 @@ namespace ExceptionNotification.Core.Hipchat
             NotifierOptions notifierOptions, HttpRequest request) : base(exception, notifierOptions, request)
         {}
 
-        public string ComposeMessage()
+        public HipchatMessage ComposeMessage()
         {
-            var message = $"{ComposeSubject()}\n\n {ComposeContent()}";
+            var messageBody = $"{ComposeSubject()}\n\n {ComposeContent()}";
+            var message = new HipchatMessage
+            {
+                Color = HipchatMessageColor.Red,
+                Format = HipchatMessageFormat.Text,
+                Message = messageBody,
+                Notify = true
+            };
+
             return message;
         }
     }

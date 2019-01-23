@@ -1,8 +1,5 @@
 ﻿using System;
 using ExceptionNotification.Core.Exceptions;
-using HipChat.Net;
-using HipChat.Net.Http;
-using HipChat.Net.Models.Request;
 using Microsoft.AspNetCore.Http;
 
 namespace ExceptionNotification.Core.Hipchat
@@ -35,10 +32,9 @@ namespace ExceptionNotification.Core.Hipchat
 
             try
             {
-                var client = new HipChatClient(new ApiConnection(new Credentials(_configuration.ApiToken)));
+                var client = new HipchatClient(_configuration.ApiToken);
                 var message = new HipchatMessageBuilder(exception, NotifierOptions, request).ComposeMessage();
-                client.Rooms.SendNotificationAsync(_configuration.RoomName, message, true, MessageFormat.Text,
-                    MessageColor.Red);
+                var response = client.SendNotificationAsync(_configuration.RoomName, message);
             }
             catch (Exception)
             {

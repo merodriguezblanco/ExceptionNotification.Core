@@ -2,6 +2,7 @@
 
 namespace ExceptionNotification.Core.Slack
 {
+    [JsonObject]
     public class SlackMessage
     {
         [JsonProperty("channel")]
