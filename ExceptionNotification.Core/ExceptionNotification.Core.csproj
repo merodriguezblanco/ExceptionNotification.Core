@@ -9,12 +9,12 @@
     <RepositoryUrl>https://github.com/merodriguezblanco/ExceptionNotification.Core</RepositoryUrl>
     <PackageTags>dotnet dotnetcore-2 exception-handling</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HipChat.Net.Portable" Version="0.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
 </Project>
