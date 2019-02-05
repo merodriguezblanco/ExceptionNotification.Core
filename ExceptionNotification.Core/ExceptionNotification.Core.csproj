@@ -9,7 +9,7 @@
     <RepositoryUrl>https://github.com/merodriguezblanco/ExceptionNotification.Core</RepositoryUrl>
     <PackageTags>dotnet dotnetcore-2 exception-handling</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.5.0</Version>
+    <Version>1.6.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
