@@ -87,28 +87,18 @@ public class Startup
 {
   // ...
 
-  public void ConfigureServices(IServiceCollection services)
-  {
-    // ...
-
-    // Bind configuration from appsettings file.
-    var configuration = new ExceptionNotificationConfiguration();
-    Configuration.Bind("ExceptionNotification", configuration);
-
-    ExceptionNotifier.Setup(configuration);
-
-    // Add singleton service to be used by the middleware.
-    services.AddSingleton<IExceptionNotificationConfiguration>(configuration);
-  }
-
   public void Configure(IApplicationBuilder app)
   {
-    // ...
+    // Bind options from appsettings file.
+    var config = new ExceptionNotifierConfiguration();
+    Configuration.Bind("ExceptionNotification", config);
 
-    app.UseMiddleware<ExceptionMiddleware>();
+    app.AddExceptionNotification(config);
   }
 }
 ```
+
+Take into account that the `app.AddExceptionNotifier()` call adds the `ExceptionMiddleware` middleware to your application under the covers. Since the order of middlewares matter, you would want to call this method at the very beginning of the `Configure`. Thus, the `ExceptionMiddleware` gets added before all others.
 
 
 ## Background process notifications
