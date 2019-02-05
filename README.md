@@ -19,7 +19,7 @@
 Install this package using the NuGet command line:
 
 ```bash
-PM> Install-Package ExceptionNotification.Core -Version 1.5.0
+PM> Install-Package ExceptionNotification.Core -Version 1.6.0
 ```
 
 ## Usage
@@ -118,8 +118,10 @@ catch(Exception exception)
 
 ## TODO
 
-This package currently provides e-mail, HipChat, and Slack notifiers. It would be ideal to implement other notifiers as well.
-More testing is also needed.
+* This package currently provides e-mail, HipChat, and Slack notifiers. It would be ideal to implement other notifiers as well.
+* More testing is also needed.
+* Extend configuration to allow custom exception notification subject.
+* Add more detailed information about request and session to exception notification messages.
 
 ## Contributing
 
