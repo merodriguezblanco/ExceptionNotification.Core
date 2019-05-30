@@ -42,10 +42,12 @@ To setup the package you must add some credentials to your `appsettings.<environ
         "DisplayName": "John Doe",
         "Address": "johndoe@server.com"
       },
-      "Recipients": {
-        "DisplayName": "Mary",
-        "Address": "mary@test.com"
-      }
+      "Recipients": [
+        {
+          "DisplayName": "Mary",
+          "Address": "mary@test.com"
+        }
+      ]
     },
     "Hipchat": {
       "RoomName": "Your Room",
